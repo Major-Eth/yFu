@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
+import ZoraEmbed from 'components/ZoraEmbed';
 import {useMint} from 'contexts/useMint';
 import {formatEther} from 'ethers/lib/utils';
 import Redis from 'ioredis';
@@ -18,7 +19,6 @@ import YFU_DATA from '../utils/data';
 
 import type {ReactElement} from 'react';
 import type {TYFUData} from '../utils/data';
-import ZoraEmbed from 'components/ZoraEmbed';
 
 const variants = {
 	initial: {y: 0, opacity: 1},

@@ -1,6 +1,6 @@
 export default function ZoraEmbed(): React.ReactElement {
 	return (
-		<div className={'bg-white w-full h-full'}>
+		<div className={'h-full w-full bg-white'}>
 			<div style={{position: 'relative', width: '100%', paddingTop: 'calc(151.82% + 72px)'}}>
 				<iframe 
 					src={'https://zora.co/collect/base:0x39adafad9fde221725b975b4adae8b8f2dfa6d4b/1/embed'}
