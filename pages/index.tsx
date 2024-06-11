@@ -18,6 +18,7 @@ import YFU_DATA from '../utils/data';
 
 import type {ReactElement} from 'react';
 import type {TYFUData} from '../utils/data';
+import ZoraEmbed from 'components/ZoraEmbed';
 
 const variants = {
 	initial: {y: 0, opacity: 1},
@@ -131,15 +132,7 @@ function	MintView(): ReactElement {
 			</h4>
 			<div className={'mb-4 grid w-full grid-cols-12 gap-2 md:my-10 md:gap-10'}>
 				<div className={'col-span-12 mb-4 flex flex-col px-0 md:col-span-4 md:mb-0'}>
-					<video
-						playsInline
-						autoPlay
-						muted
-						loop
-						poster={'/artwork.png'}
-						className={'h-full w-full object-cover md:aspect-auto md:object-contain'}>
-						<source src={'/artwork.mp4'} type={'video/mp4'} />
-					</video>
+					<ZoraEmbed />
 				</div>
 				<div className={'col-span-12 flex w-full flex-col md:col-span-8'}>
 					{isActive ? <div /> : (
