@@ -128,7 +128,9 @@ function	MintView(): ReactElement {
 						{'Mint the NFT'}
 					</h4>
 					<button
-						onClick={() => window.open(process.env.MINT_URL ?? '/', '_blank', 'noopener,noreferrer')}
+						onClick={(): void => {
+							window.open(process.env.MINT_URL ?? '/', '_blank', 'noopener,noreferrer');
+						}}
 						className={'button-glowing my-4 bg-white text-black'}>
 						{'Mint on Zora'}
 						<div className={'glow absolute -inset-0 rotate-180 rounded-full'} />
