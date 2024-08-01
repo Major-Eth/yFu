@@ -1,7 +1,7 @@
 import Countdown from './Countdown';
 
 export default function SnapshotCountdown({className}: {className?: string}): React.ReactElement {
-	const deadline = new Date('2024-06-27T00:00:00Z');
+	const deadline = new Date(process.env.SNAPSHOT ?? Date.now());
 	return (
 		<div className={`flex w-full items-center justify-between ${className}`}>
 			<div>
