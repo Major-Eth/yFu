@@ -75,7 +75,7 @@ function FAQ(): ReactElement {
 							{'They are also commemorative and collectible digital artwork on the Ethereum blockchain.'}
 						</li>
 						<li className={'text-base text-white'}>
-							{'There is a fixed supply of 3,000 NFTs, and each will be associated with a frame from the comics after reveal.'}
+							{'There is a fixed supply of 888 NFTs, and each will be associated with a frame from the comics after reveal.'}
 						</li>
 						<li className={'text-base text-white'}>
 							{'Artwork and metadata is stored on IPFS.'}
