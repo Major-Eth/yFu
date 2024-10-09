@@ -21,7 +21,7 @@ const	redis = new Redis(process.env.REDIS_URL as string);
 function	Goddess({characterSrc='', typoSrc='', id='', title='', children=<div />}): ReactElement {
 	const	router = useRouter();
 
-	const onClickTribute = useCallback((id: string) => {
+	const onClickTribute = useCallback((id: string): void => {
 		console.log('routing', `/tribute/${id}`);
 		router.push(`/tribute/${id}`);
 	}, [router]);
@@ -56,7 +56,7 @@ function	Goddess({characterSrc='', typoSrc='', id='', title='', children=<div />
 				</div>
 				<div className={'mx-auto mt-8 pt-8 md:mt-auto'}>
 					<button
-						onClick={() => onClickTribute(id)}
+						onClick={(): void => onClickTribute(id)}
 						className={'button-glowing bg-white font-peste text-black'}>
 						{'SEE TRIBUTES'}
 						<div className={'glow absolute -inset-0 rotate-180 rounded-full'} />
