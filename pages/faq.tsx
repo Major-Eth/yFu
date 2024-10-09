@@ -27,13 +27,13 @@ function FAQ(): ReactElement {
 							{'NFT Reveal'}
 						</li>
 						<li className={'text-base text-white'}>
-							{'Snapshot of NFT holders is taken on April 1st 2024'}
+							{'Snapshot of NFT holders is taken on November 11th 2024'}
 						</li>
 						<li className={'text-base text-white'}>
 							{'Airdrop of shipping coupons within a day or two.'}
 						</li>
 						<li className={'text-base text-white'}>
-							{'Shipping information entry period: open until May 1st.'}
+							{'Shipping information entry period: open until December 11th.'}
 						</li>
 						<li className={'text-base text-white'}>
 							{'Comics will ship! (expect 6-8 weeks for delivery)'}
