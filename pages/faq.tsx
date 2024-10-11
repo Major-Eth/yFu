@@ -12,10 +12,9 @@ function FAQ(): ReactElement {
 					{'Base Chain'}
 				</h1>
 				<div className={'mt-10 text-base text-white'}>
-					<p>Your yFu NFTs will be minted on the Base chain!</p> 
-					<p>NFT contract is <a href="https://basescan.org/address/0x39adafad9fde221725b975b4adae8b8f2dfa6d4b">here 0x39ad...6d4b</a></p>
+					<p>{'Your yFu NFTs will be minted on the Base chain!'}</p> 
+					<p>{'NFT contract is '}<a href={'https://basescan.org/address/0x39adafad9fde221725b975b4adae8b8f2dfa6d4b'}>{'here 0x39ad...6d4b'}</a></p>
 				</div>
-
 				<h1 className={'mt-20 whitespace-pre-wrap text-4xl font-bold text-white'}>
 					{'Campaign Timeline'}
 				</h1>
