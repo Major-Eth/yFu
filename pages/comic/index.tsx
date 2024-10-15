@@ -177,20 +177,24 @@ export default function CarouselPage(): React.ReactElement {
 
 			<article className={'z-10 flex flex-col items-stretch justify-between space-y-4 overflow-hidden p-4 py-8 sm:space-y-16'}>
 
-				<section className={'mb-4 flex w-full justify-center gap-x-2'}>
+				<section className={'mb-4 flex w-full justify-center gap-x-1 sm:gap-x-4'}>
 					{/* eslint-disable-next-line @typescript-eslint/explicit-function-return-type */}
-					{tabs.map((tab) => (
-						<button
-							key={tab}
-							onClick={(): void | null => (tab === 'techne' ? set_activeTab(tab) : null)}
-							disabled={tab !== 'techne'}
-							className={`rounded-md px-2 py-1 text-sm capitalize ${
-								activeTab === tab ? 'bg-white/30' : 'text-white'
-							} ${tab !== 'techne' ? 'cursor-not-allowed opacity-30' : ''}`}
-						>
-							{tab}
-						</button>
-					))}
+					{(() => {
+						const disabledTabs = ['transmission', 'community', 'dominion'];
+						return (
+							// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+							tabs.map((tab) => (
+								<button
+									key={tab}
+									onClick={(): void => set_activeTab(tab)}
+									className={`rounded-md px-2 py-1 text-sm capitalize ${activeTab === tab ? 'bg-white/30' : disabledTabs.includes(tab) ? 'text-white/70 cursor-not-allowed' : 'text-white'}`}
+									disabled={disabledTabs.includes(tab)} // Use disabledTabs here
+								>
+									{disabledTabs.includes(tab) ? '🔒 ' : ''}{tab}
+								</button>
+							))
+						);
+					})()}
 				</section>
 
 
