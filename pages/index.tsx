@@ -169,7 +169,6 @@ function MintView(): ReactElement {
 					</h4>
 					{isActive ? <div/> : (
 						<button
-							disabled={true}
 							onClick={connectWallet}
 							className={'button-glowing my-4 bg-white text-black'}>
 							{'Connect your wallet'}
