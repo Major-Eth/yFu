@@ -1,7 +1,13 @@
 import React, {useCallback, useEffect, useState} from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import {useRouter} from 'next/router';
+import Button from 'components/Button';
+import Connect from 'components/Connect';
 import {useMint} from 'contexts/useMint';
+import {useNft} from 'contexts/useNft';
 import Redis from 'ioredis';
+import {useAccount} from 'wagmi';
 import axios from 'axios';
 
 import ComicIntro from '../components/ComicIntro';
@@ -12,13 +18,6 @@ import YFU_DATA from '../utils/data';
 
 import type {ReactElement} from 'react';
 import type {TYFUData} from '../utils/data';
-
-import { useAccount } from 'wagmi';
-import Connect from 'components/Connect';
-import Button from 'components/Button';
-import { useNft } from 'contexts/useNft';
-import Image from 'next/image';
-import Link from 'next/link';
 
 const redis = new Redis(process.env.REDIS_URL as string);
 
@@ -104,8 +103,8 @@ function Tree(): ReactElement {
 }
 
 function MintView(): ReactElement {
-	const { isConnected } = useAccount();
-	const { balanceOf } = useNft();
+	const {isConnected} = useAccount();
+	const {balanceOf} = useNft();
 
 	const {
 		shippingDone

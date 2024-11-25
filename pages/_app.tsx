@@ -3,7 +3,13 @@ import Head from 'next/head';
 import Image from 'next/image';
 import {DefaultSeo} from 'next-seo';
 import {MintContextApp} from 'contexts/useMint';
+import {http, WagmiProvider} from 'wagmi';
+import {base} from 'wagmi/chains';
 import {Dialog, Transition} from '@headlessui/react';
+import {getDefaultConfig,
+	RainbowKitProvider} from '@rainbow-me/rainbowkit';
+import {QueryClient,
+	QueryClientProvider} from '@tanstack/react-query';
 import {WithYearn} from '@yearn-finance/web-lib/contexts/WithYearn';
 
 import Header from '../components/Header';
@@ -13,29 +19,16 @@ import type {AppProps} from 'next/app';
 import type {ReactElement, ReactNode} from 'react';
 
 import '../style.css';
-
 import '@rainbow-me/rainbowkit/styles.css';
-import {
-  getDefaultConfig,
-  RainbowKitProvider,
-} from '@rainbow-me/rainbowkit';
-import { http, WagmiProvider } from 'wagmi';
-import {
-  base,
-} from 'wagmi/chains';
-import {
-  QueryClientProvider,
-  QueryClient,
-} from "@tanstack/react-query";
 
 const config = getDefaultConfig({
-  appName: 'yfu temple',
-  projectId: '19b7e0458a927a6954498322eea5226a',
-  chains: [base],
-  ssr: true,
+	appName: 'yfu temple',
+	projectId: '19b7e0458a927a6954498322eea5226a',
+	chains: [base],
+	ssr: true,
 	transports: {
-    [base.id]: http('https://base.gateway.tenderly.co/44o3I2s29kcHgNsYCeR2rR'),
-  },
+		[base.id]: http('https://base.gateway.tenderly.co/44o3I2s29kcHgNsYCeR2rR')
+	}
 });
 
 const WithSplash = memo(function WithSplash({children}: {children: ReactNode}): ReactElement {

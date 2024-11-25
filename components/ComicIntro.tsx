@@ -10,7 +10,7 @@ export default function ComicIntro(): React.ReactElement {
 	};
 
 	return (
-		<section className={'grid grid-cols-1 divide-y divide-white border-2 border-white md:grid-cols-3 md:divide-y-0 mb-16'}>
+		<section className={'mb-16 grid grid-cols-1 divide-y divide-white border-2 border-white md:grid-cols-3 md:divide-y-0'}>
 			<div className={'relative col-span-1 flex flex-col items-center justify-center divide-y divide-white p-0 md:divide-y-0 md:p-8'}>
 				<div className={'image-wrapper-full-height h-32 md:h-auto'}>
 					<Image

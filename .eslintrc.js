@@ -91,16 +91,6 @@ module.exports = {
 		'@typescript-eslint/consistent-type-assertions': ['error', {'assertionStyle': 'as', 'objectLiteralTypeAssertions': 'never'}],
 		'@typescript-eslint/consistent-type-definitions': ['error', 'type'],
 		'@typescript-eslint/consistent-indexed-object-style': ['error', 'index-signature'],
-		'@typescript-eslint/explicit-function-return-type': [
-			'error', {
-				'allowExpressions': false,
-				'allowTypedFunctionExpressions': false,
-				'allowHigherOrderFunctions': false,
-				'allowDirectConstAssertionInArrowFunctions': false,
-				'allowConciseArrowFunctionExpressionsStartingWithVoid': false,
-				'allowedNames': []
-			}
-		],
 		'@typescript-eslint/naming-convention': [
 			'error',
 			{'selector': 'default', 'format': ['camelCase']},

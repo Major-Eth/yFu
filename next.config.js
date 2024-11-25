@@ -36,6 +36,6 @@ module.exports = (phase) => withPWA({
 		MULTICALL_ADDRESS: process.env.MULTICALL_ADDRESS,
 		MINT_CONTRACT_ADDRESS: process.env.MINT_CONTRACT_ADDRESS,
 		MINT_URL: process.env.MINT_URL,
-		MINT_PRICE_WEI: process.env.MINT_PRICE_WEI,
+		MINT_PRICE_WEI: process.env.MINT_PRICE_WEI
 	}
 });

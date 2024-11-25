@@ -4,11 +4,11 @@ import Link from 'next/link';
 import {useRouter} from 'next/router';
 import Footer from 'components/Footer';
 import {useMint} from 'contexts/useMint';
+import {useNft} from 'contexts/useNft';
 import axios from 'axios';
 import {useWeb3} from '@yearn-finance/web-lib/contexts/useWeb3';
 
 import type {ReactElement} from 'react';
-import { useNft } from 'contexts/useNft';
 
 type TFormField = {
 	label: string,
@@ -47,10 +47,6 @@ function	Apply(): ReactElement {
 	const	[shippingForTokenID, set_shippingForTokenID] = useState(-1);
 
 	const {ownedByUser} = useNft();
-
-	useEffect(() => {
-		console.log('ownedByUser', ownedByUser)
-	}, [ownedByUser])
 
 	const	possibleShipping = useMemo((): number[] => {
 		return (ownedByUser || []).filter((item): boolean => !(shippingDone || []).includes(item));
