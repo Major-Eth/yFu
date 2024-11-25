@@ -14,6 +14,30 @@ import type {ReactElement, ReactNode} from 'react';
 
 import '../style.css';
 
+import '@rainbow-me/rainbowkit/styles.css';
+import {
+  getDefaultConfig,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
+import { http, WagmiProvider } from 'wagmi';
+import {
+  base,
+} from 'wagmi/chains';
+import {
+  QueryClientProvider,
+  QueryClient,
+} from "@tanstack/react-query";
+
+const config = getDefaultConfig({
+  appName: 'yfu temple',
+  projectId: '19b7e0458a927a6954498322eea5226a',
+  chains: [base],
+  ssr: true,
+	transports: {
+    [base.id]: http('https://base.gateway.tenderly.co/44o3I2s29kcHgNsYCeR2rR'),
+  },
+});
+
 const WithSplash = memo(function WithSplash({children}: {children: ReactNode}): ReactElement {
 	const	[hasOpacity, set_hasOpacity] = useState(true);
 	const	[shouldDisplay, set_shouldDisplay] = useState(true);
@@ -175,7 +199,8 @@ function	AppWrapper(props: AppProps): ReactElement {
 
 function	MyApp(props: AppProps): ReactElement {
 	const	{Component, pageProps} = props;
-	const chainId = parseInt(process.env.CHAIN_ID ?? '0');
+	const chainId = parseInt(process.env.CHAIN_ID ?? '8453');
+	const queryClient = new QueryClient();
 
 	return (
 		<WithYearn
@@ -187,10 +212,16 @@ function	MyApp(props: AppProps): ReactElement {
 			}}>
 			<MintContextApp>
 				<AudioContextApp>
-					<AppWrapper
-						Component={Component}
-						pageProps={pageProps}
-						router={props.router} />
+					<WagmiProvider config={config}>
+						<QueryClientProvider client={queryClient}>
+							<RainbowKitProvider>
+								<AppWrapper
+									Component={Component}
+									pageProps={pageProps}
+									router={props.router} />
+							</RainbowKitProvider>
+						</QueryClientProvider>
+					</WagmiProvider>
 				</AudioContextApp>
 			</MintContextApp>
 		</WithYearn>

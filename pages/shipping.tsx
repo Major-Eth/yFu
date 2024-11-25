@@ -8,6 +8,7 @@ import axios from 'axios';
 import {useWeb3} from '@yearn-finance/web-lib/contexts/useWeb3';
 
 import type {ReactElement} from 'react';
+import { useNft } from 'contexts/useNft';
 
 type TFormField = {
 	label: string,
@@ -40,10 +41,16 @@ function	normalizeString(str: string): string {
 
 function	Apply(): ReactElement {
 	const	{provider, isActive, address, openLoginModal, onDesactivate} = useWeb3();
-	const	{ownedByUser, shippingDone, set_shippingDone} = useMint();
+	const	{shippingDone, set_shippingDone} = useMint();
 	const	router = useRouter();
 	const	[isSubmitLocked, set_isSubmitLocked] = useState(false);
 	const	[shippingForTokenID, set_shippingForTokenID] = useState(-1);
+
+	const {ownedByUser} = useNft();
+
+	useEffect(() => {
+		console.log('ownedByUser', ownedByUser)
+	}, [ownedByUser])
 
 	const	possibleShipping = useMemo((): number[] => {
 		return (ownedByUser || []).filter((item): boolean => !(shippingDone || []).includes(item));
