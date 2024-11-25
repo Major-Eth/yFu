@@ -1,12 +1,8 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import {useMint} from 'contexts/useMint';
-import {formatEther} from 'ethers/lib/utils';
 import Redis from 'ioredis';
 import axios from 'axios';
-import {useWeb3} from '@yearn-finance/web-lib/contexts/useWeb3';
 
 import ComicIntro from '../components/ComicIntro';
 import Footer from '../components/Footer';
@@ -17,12 +13,12 @@ import YFU_DATA from '../utils/data';
 import type {ReactElement} from 'react';
 import type {TYFUData} from '../utils/data';
 
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useAccount, useReadContract } from 'wagmi';
+import { useAccount } from 'wagmi';
 import Connect from 'components/Connect';
-import { erc721Abi, parseAbi, zeroAddress } from 'viem';
 import Button from 'components/Button';
 import { useNft } from 'contexts/useNft';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const redis = new Redis(process.env.REDIS_URL as string);
 
@@ -46,7 +42,7 @@ function Goddess({characterSrc = '', typoSrc = '', id = '', title = '', children
 						quality={90}
 						className={'aspect-square w-32 object-contain p-2 md:w-full'}
 						width={497}
-						height={497}/>
+						height={497} />
 				</div>
 			</div>
 			<div className={'image-wrapper col-span-1 block md:hidden'}>
