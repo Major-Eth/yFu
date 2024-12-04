@@ -1,6 +1,4 @@
-import	Redis	from	'ioredis';
-
-const	redis = new Redis(process.env.REDIS_URL as string);
+import {redis} from 'utils/redis';
 
 export async function incVisitors(): Promise<number> {
 	const visitors = await redis.incr('counter');

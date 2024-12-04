@@ -2,11 +2,13 @@ import React, {useCallback, useEffect, useState} from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
+import Button from 'components/Button';
+import Connect from 'components/Connect';
 import {useMint} from 'contexts/useMint';
-import {formatEther} from 'ethers/lib/utils';
-import Redis from 'ioredis';
+import {useTickets} from 'contexts/useTickets';
+import {redis} from 'utils/redis';
+import {useAccount} from 'wagmi';
 import axios from 'axios';
-import {useWeb3} from '@yearn-finance/web-lib/contexts/useWeb3';
 
 import ComicIntro from '../components/ComicIntro';
 import Footer from '../components/Footer';
@@ -16,8 +18,6 @@ import YFU_DATA from '../utils/data';
 
 import type {ReactElement} from 'react';
 import type {TYFUData} from '../utils/data';
-
-const redis = new Redis(process.env.REDIS_URL as string);
 
 function Goddess({characterSrc = '', typoSrc = '', id = '', title = '', children = <div/>}): ReactElement {
 	const router = useRouter();
@@ -39,7 +39,7 @@ function Goddess({characterSrc = '', typoSrc = '', id = '', title = '', children
 						quality={90}
 						className={'aspect-square w-32 object-contain p-2 md:w-full'}
 						width={497}
-						height={497}/>
+						height={497} />
 				</div>
 			</div>
 			<div className={'image-wrapper col-span-1 block md:hidden'}>
@@ -101,30 +101,13 @@ function Tree(): ReactElement {
 }
 
 function MintView(): ReactElement {
+	const {isConnected} = useAccount();
+	const tickets = useTickets();
+	const balanceOf = tickets.length;
+
 	const {
-		isActive,
-		address,
-		openLoginModal,
-		onDesactivate,
-		onSwitchChain
-	} = useWeb3();
-	const {
-		price,
-		balanceOf,
-		totalSupply,
-		maxSupply,
 		shippingDone
 	} = useMint();
-
-	function connectWallet(): void {
-		if (isActive) {
-			onDesactivate();
-		} else if (!isActive && address) {
-			onSwitchChain(1, true);
-		} else {
-			openLoginModal();
-		}
-	}
 
 	return (
 		<div className={'mb-16 flex flex-col items-center border-2 border-white p-4 text-white md:p-8'}>
@@ -167,39 +150,25 @@ function MintView(): ReactElement {
 					<h4 className={'text-2xl font-bold'}>
 						{'Get the physical comics'}
 					</h4>
-					{isActive ? <div/> : (
-						<button
-							disabled={true}
-							onClick={connectWallet}
-							className={'button-glowing my-4 bg-white text-black'}>
-							{'Connect your wallet'}
-							<div className={'glow absolute -inset-0 rotate-180 rounded-full'}/>
-							<div className={'glow absolute -inset-0 rotate-180 rounded-full'}/>
-						</button>
-					)}
+					<Connect />
 
 					<div className={'flex flex-col'}>
 						<div
-							className={`mb-8 flex flex-col items-center space-x-0 md:flex-row md:space-x-6 ${!isActive ? 'pointer-events-none' : ''}`}>
+							className={`mb-8 flex flex-col items-center space-x-0 md:flex-row md:space-x-6 ${!isConnected ? 'pointer-events-none' : ''}`}>
 							<Link
 								href={balanceOf < 1 ? '' : '/shipping'}
 								className={`w-full ${balanceOf < 1 ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
-								<button
+								<Button
 									disabled={balanceOf < 1}
 									className={'button-glowing w-full bg-white font-peste text-black md:my-4'}>
 									<p>{'Fill Shipping Information'}</p>
-									<div className={'glow absolute -inset-0 rotate-180 rounded-full'}/>
-									<div className={'glow absolute -inset-0 rotate-180 rounded-full'}/>
-								</button>
+								</Button>
 							</Link>
 						</div>
 						<div>
 							<h4 className={'mb-6 flex text-2xl font-bold md:hidden md:text-4xl'}>
 								{'yFu - The Comic, Episodes 1 to 4'}
 							</h4>
-							<p className={'mb-4 hidden font-scope text-base text-white md:text-lg'}>
-								{`${formatEther(price)} ETH - ${totalSupply} of ${maxSupply} NFTs Minted So Far`}
-							</p>
 							<p className={'mb-4 font-scope text-base text-white md:text-lg'}>
 								{'Each NFT holder is eligible to receive a physical set of all four limited first edition comics, at no additional cost. Mint, hodl to the snapshot, and receive a redeemable coupon to enter shipping information. Then, prepare to own your piece of Yearn & DeFi history.'}
 							</p>
@@ -217,7 +186,7 @@ function MintView(): ReactElement {
 							<div className={'pt-1'}>
 								<div className={'h-4 w-4 animate-pulse rounded-full bg-green-500'}/>
 							</div>
-							<div>
+							<div suppressHydrationWarning>
 								<p>{`You have minted ${balanceOf} yFu Comic NFT${balanceOf > 1 ? 's' : ''}`}</p>
 								<p>{`You entered shipping for ${shippingDone.length} yFu Comic NFT${balanceOf > 1 ? 's' : ''}`}</p>
 							</div>

@@ -187,7 +187,7 @@ export default function CarouselPage(): React.ReactElement {
 								<button
 									key={tab}
 									onClick={(): void => set_activeTab(tab)}
-									className={`rounded-md px-2 py-1 text-sm capitalize ${activeTab === tab ? 'bg-white/30' : disabledTabs.includes(tab) ? 'text-white/70 cursor-not-allowed' : 'text-white'}`}
+									className={`rounded-md px-2 py-1 text-sm capitalize ${activeTab === tab ? 'bg-white/30' : disabledTabs.includes(tab) ? 'cursor-not-allowed text-white/70' : 'text-white'}`}
 									disabled={disabledTabs.includes(tab)} // Use disabledTabs here
 								>
 									{disabledTabs.includes(tab) ? '🔒 ' : ''}{tab}
