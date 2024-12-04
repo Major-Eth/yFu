@@ -1,4 +1,4 @@
-import { redis } from 'utils/redis';
+import {redis} from 'utils/redis';
 
 export async function incVisitors(): Promise<number> {
 	const visitors = await redis.incr('counter');

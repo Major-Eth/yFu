@@ -5,10 +5,10 @@ import {useRouter} from 'next/router';
 import Footer from 'components/Footer';
 import {useMint} from 'contexts/useMint';
 import {useTickets} from 'contexts/useTickets';
+import {useAccount, useSignMessage} from 'wagmi';
 import axios from 'axios';
 
 import type {ReactElement} from 'react';
-import { useAccount, useSignMessage } from 'wagmi';
 
 type TFormField = {
 	label: string,
@@ -41,8 +41,8 @@ function	normalizeString(str: string): string {
 }
 
 function	Apply(): ReactElement {
-	const { isConnected: isActive, address } = useAccount();
-	const { signMessageAsync } = useSignMessage();
+	const {isConnected: isActive, address} = useAccount();
+	const {signMessageAsync} = useSignMessage();
 	
 	const	{shippingDone, set_shippingDone} = useMint();
 	const	router = useRouter();
@@ -218,7 +218,7 @@ function	Apply(): ReactElement {
 							name={'owner'}
 							readOnly
 							value={isActive ? address as string : ''}
-							notice={<>Your address</>} />
+							notice={<>{'Your address'}</>} />
 
 						<div className={'grid grid-cols-12 items-center gap-x-0 gap-y-2 md:gap-x-6 md:gap-y-0'} style={{width: '100%'}}>
 							<label className={'text-grey-2 col-span-12 flex flex-col font-bold'}>

@@ -1,14 +1,16 @@
+import {SnapshotSchema} from 'contexts/useTickets';
 import {ethers} from 'ethers';
-import type {NextApiRequest, NextApiResponse} from 'next';
+import {redis} from 'utils/redis';
+
 import snapshotJson from '../../contexts/useTickets.json';
-import { SnapshotSchema } from 'contexts/useTickets';
-import { redis } from 'utils/redis';
+
+import type {NextApiRequest, NextApiResponse} from 'next';
 
 const snapshot = SnapshotSchema.parse(snapshotJson);
 
 function getOwnerOfTokenId(tokenId: number) {
-  const entry = snapshot.find(ticket => ticket.tokens.includes(tokenId));
-  return entry?.owner ?? '';
+	const entry = snapshot.find(ticket => ticket.tokens.includes(tokenId));
+	return entry?.owner ?? '';
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
@@ -37,16 +39,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	}
 
 	const form = JSON.parse(req.body.body);
-	console.log('process.env.SCRIPT_SHIPPING_URL', process.env.SCRIPT_SHIPPING_URL)
-	console.log('form', form)
+	console.log('process.env.SCRIPT_SHIPPING_URL', process.env.SCRIPT_SHIPPING_URL);
+	console.log('form', form);
 
 	try {
 		const response = await fetch(process.env.SCRIPT_SHIPPING_URL as string, {
 			method: 'POST',
 			body: JSON.stringify(form),
 			headers: {
-				'Content-Type': 'application/json',
-			},
+				'Content-Type': 'application/json'
+			}
 		});
 	
 		if (response.ok) {

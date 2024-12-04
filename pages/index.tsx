@@ -5,6 +5,8 @@ import {useRouter} from 'next/router';
 import Button from 'components/Button';
 import Connect from 'components/Connect';
 import {useMint} from 'contexts/useMint';
+import {useTickets} from 'contexts/useTickets';
+import {redis} from 'utils/redis';
 import {useAccount} from 'wagmi';
 import axios from 'axios';
 
@@ -16,8 +18,6 @@ import YFU_DATA from '../utils/data';
 
 import type {ReactElement} from 'react';
 import type {TYFUData} from '../utils/data';
-import { useTickets } from 'contexts/useTickets';
-import { redis } from 'utils/redis';
 
 function Goddess({characterSrc = '', typoSrc = '', id = '', title = '', children = <div/>}): ReactElement {
 	const router = useRouter();
