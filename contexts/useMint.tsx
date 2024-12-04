@@ -31,6 +31,7 @@ const MintContext = createContext<TMintContext>({
 	set_shippingDone: (): void => undefined,
 	refresh: async (): Promise<void> => undefined
 });
+
 export const MintContextApp = ({children}: {children: ReactElement}): ReactElement => {
 	const {provider, address, isActive} = useWeb3();
 	const [balanceOf, set_balanceOf] = useState<number>(0);
@@ -63,7 +64,7 @@ export const MintContextApp = ({children}: {children: ReactElement}): ReactEleme
 
 		performBatchedUpdates((): void => {
 			set_balanceOf((_balanceOf || ethers.constants.Zero).toNumber());
-			set_totalSupply((_totalSupply || ethers.constants.Zero).toNumber());
+			set_totalSupply(888);
 			set_ownedByUser(_ownedByUser.map((tokenIDBig): number => Number(tokenIDBig)));
 		});
 	}, [provider, address, isActive]);

@@ -5,8 +5,6 @@ import {useRouter} from 'next/router';
 import Button from 'components/Button';
 import Connect from 'components/Connect';
 import {useMint} from 'contexts/useMint';
-import {useNft} from 'contexts/useNft';
-import Redis from 'ioredis';
 import {useAccount} from 'wagmi';
 import axios from 'axios';
 
@@ -18,8 +16,8 @@ import YFU_DATA from '../utils/data';
 
 import type {ReactElement} from 'react';
 import type {TYFUData} from '../utils/data';
-
-const redis = new Redis(process.env.REDIS_URL as string);
+import { useTickets } from 'contexts/useTickets';
+import { redis } from 'utils/redis';
 
 function Goddess({characterSrc = '', typoSrc = '', id = '', title = '', children = <div/>}): ReactElement {
 	const router = useRouter();
@@ -104,7 +102,8 @@ function Tree(): ReactElement {
 
 function MintView(): ReactElement {
 	const {isConnected} = useAccount();
-	const {balanceOf} = useNft();
+	const tickets = useTickets();
+	const balanceOf = tickets.length;
 
 	const {
 		shippingDone
@@ -187,7 +186,7 @@ function MintView(): ReactElement {
 							<div className={'pt-1'}>
 								<div className={'h-4 w-4 animate-pulse rounded-full bg-green-500'}/>
 							</div>
-							<div>
+							<div suppressHydrationWarning>
 								<p>{`You have minted ${balanceOf} yFu Comic NFT${balanceOf > 1 ? 's' : ''}`}</p>
 								<p>{`You entered shipping for ${shippingDone.length} yFu Comic NFT${balanceOf > 1 ? 's' : ''}`}</p>
 							</div>

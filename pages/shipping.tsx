@@ -1,14 +1,14 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {toast} from 'react-hot-toast';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 import Footer from 'components/Footer';
 import {useMint} from 'contexts/useMint';
-import {useNft} from 'contexts/useNft';
+import {useTickets} from 'contexts/useTickets';
 import axios from 'axios';
-import {useWeb3} from '@yearn-finance/web-lib/contexts/useWeb3';
 
 import type {ReactElement} from 'react';
+import { useAccount, useSignMessage } from 'wagmi';
 
 type TFormField = {
 	label: string,
@@ -17,6 +17,7 @@ type TFormField = {
 	formType?: string,
 	required?: boolean
 }
+
 function FormField({label = '', name = '', notice = '', required = true, style, ...props}: TFormField & React.HTMLProps<HTMLInputElement>): ReactElement {
 	return (
 		<div className={'grid grid-cols-12 items-center gap-x-0 gap-y-2 md:gap-x-6 md:gap-y-0'} style={style}>
@@ -40,13 +41,15 @@ function	normalizeString(str: string): string {
 }
 
 function	Apply(): ReactElement {
-	const	{provider, isActive, address, openLoginModal, onDesactivate} = useWeb3();
+	const { isConnected: isActive, address } = useAccount();
+	const { signMessageAsync } = useSignMessage();
+	
 	const	{shippingDone, set_shippingDone} = useMint();
 	const	router = useRouter();
 	const	[isSubmitLocked, set_isSubmitLocked] = useState(false);
 	const	[shippingForTokenID, set_shippingForTokenID] = useState(-1);
 
-	const {ownedByUser} = useNft();
+	const	ownedByUser = useTickets();
 
 	const	possibleShipping = useMemo((): number[] => {
 		return (ownedByUser || []).filter((item): boolean => !(shippingDone || []).includes(item));
@@ -56,11 +59,9 @@ function	Apply(): ReactElement {
 		set_shippingForTokenID((possibleShipping || [])?.[possibleShipping?.length - 1] || -1);
 	}, [possibleShipping]);
 
-	async function signMessage(tokenID: number): Promise<string> {
-		const	signer = provider.getSigner();
-		const	signature = await signer.signMessage('I own edition #' + tokenID);
-		return signature;
-	}
+	const signMessage = useCallback(async (tokenID: number): Promise<string> => {
+		return await signMessageAsync({message: 'I own edition #' + tokenID});
+	}, [signMessageAsync]);
 
 	const	handleSubmit = (): ReactElement => {
 		if (!isSubmitLocked) {
@@ -201,8 +202,8 @@ function	Apply(): ReactElement {
 						label={'Full Country Name (no abbreviations)'}
 						name={'country'} />
 					<FormField
-						required
-						label={'Phone'}
+						required={false}
+						label={'Phone (Optional)'}
 						name={'phone'}
 						type={'tel'} />
 					<FormField
@@ -217,20 +218,7 @@ function	Apply(): ReactElement {
 							name={'owner'}
 							readOnly
 							value={isActive ? address as string : ''}
-							notice={
-								<button
-									type={'button'}
-									className={'text-sm italic text-white underline opacity-40'}
-									onClick={(): void => {
-										if (isActive) {
-											onDesactivate();
-										} else {
-											openLoginModal();
-										}
-									}}>
-									<p>{isActive ? 'Disconnect' : 'Connect Wallet'}</p>
-								</button>
-							} />
+							notice={<>Your address</>} />
 
 						<div className={'grid grid-cols-12 items-center gap-x-0 gap-y-2 md:gap-x-6 md:gap-y-0'} style={{width: '100%'}}>
 							<label className={'text-grey-2 col-span-12 flex flex-col font-bold'}>
